@@ -1,0 +1,28 @@
+# 아이콘 파일 필요
+
+## 필요한 아이콘:
+- icon.png (512x512 권장)
+- icon.ico (Windows용, 256x256)
+
+## 아이콘 생성 방법:
+
+### 온라인 도구 사용:
+1. https://www.canva.com 또는 https://www.figma.com 에서 디자인
+2. 512x512 PNG로 내보내기
+3. https://convertio.co/png-ico/ 에서 ICO로 변환
+
+### POE 로고 사용:
+1. POE 공식 웹사이트에서 로고 다운로드
+2. 적절한 크기로 리사이징
+3. PNG와 ICO 형식으로 저장
+
+## 파일 위치:
+- `/poe1-kakao-launcher/icon.png`
+- `/poe1-kakao-launcher/icon.ico`
+
+## 임시 대책:
+아이콘이 없어도 빌드는 가능하지만, 기본 Electron 아이콘이 표시됩니다.
+
+## 라이센스 주의:
+POE 공식 로고 사용 시 Grinding Gear Games의 저작권을 존중해야 합니다.
+비공식 프로젝트임을 명시하세요.
