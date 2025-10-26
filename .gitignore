@@ -1,9 +1,11 @@
-node_modules/
-dist/
+node_modules
+dist
+out
 *.log
 .DS_Store
+.vscode
+.idea
+*.local
 .env
-*.exe
-*.dmg
-*.AppImage
-build/
+.env.local
+.env.*.local
