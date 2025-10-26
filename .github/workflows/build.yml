@@ -1,0 +1,75 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Calculate SHA512
+        id: hash
+        shell: powershell
+        run: |
+          $hash = (Get-FileHash -Path "dist\poe1-kakao-launcher-*.exe" -Algorithm SHA512).Hash
+          echo "sha512=$hash" >> $env:GITHUB_OUTPUT
+      
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist/*.exe
+            dist/*.yml
+          body: |
+            ## 🎉 POE1 Kakao Launcher Release
+            
+            ### 📦 다운로드
+            아래 `poe1-kakao-launcher-setup.exe` 파일을 다운로드하세요.
+            
+            ### 🔒 SHA512 체크섬
+            ```
+            ${{ steps.hash.outputs.sha512 }}
+            ```
+            
+            ### 📋 설치 방법
+            자세한 설치 방법은 [README.md](https://github.com/${{ github.repository }}/blob/main/README.md)를 참고하세요.
+            
+            ### ✨ 주요 기능
+            - 다음게임스타터 우회
+            - 자동 게임 실행
+            - 스팀덱 최적화
+            
+            ### ⚙️ 시스템 요구사항
+            - 스팀덱 (SteamOS 3.x)
+            - Proton 9.0 이상
+            - 약 150MB 여유 공간
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: poe1-kakao-launcher
+          path: dist/*.exe

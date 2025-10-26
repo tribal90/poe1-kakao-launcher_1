@@ -23,8 +23,11 @@
     "appId": "com.poe1.kakao.launcher",
     "productName": "POE1 Kakao Launcher",
     "win": {
-      "target": "nsis",
+      "target": ["portable", "nsis"],
       "icon": "icon.ico"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
     },
     "nsis": {
       "oneClick": false,

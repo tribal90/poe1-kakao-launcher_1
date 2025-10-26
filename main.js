@@ -112,6 +112,12 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient('daumgamestarter');
 }
 
+// Proton/Wine 호환성을 위한 명령줄 스위치
+app.commandLine.appendSwitch('no-sandbox');
+app.commandLine.appendSwitch('disable-gpu-sandbox');
+app.commandLine.appendSwitch('in-process-gpu');
+app.commandLine.appendSwitch('disable-software-rasterizer');
+
 // 앱 준비 완료
 app.whenReady().then(() => {
   createWindow();
